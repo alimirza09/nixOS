@@ -34,6 +34,9 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    catppuccin-gtk
+    papirus-icon-theme
+    bibata-cursors
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -70,6 +73,29 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     EDITOR = "nvim";
+  };
+  gtk = {
+    enable = true;
+
+    theme = {
+      name =
+        "Catppuccin-Mocha-Standard-Mauve-Dark"; # or Adwaita-dark or any installed theme
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "mauve" ];
+        size = "standard";
+        variant = "mocha";
+      };
+    };
+
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+
+    cursorTheme = {
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
+    };
   };
 
   # Let Home Manager install and manage itself.
