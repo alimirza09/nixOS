@@ -3,7 +3,6 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
   home.username = "ali";
   home.homeDirectory = "/home/ali";
 
