@@ -31,6 +31,8 @@
   time.timeZone = "Asia/Karachi";
   programs.fish.enable = true;
 
+  programs.dconf.enable = true;
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
