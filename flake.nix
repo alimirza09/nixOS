@@ -10,11 +10,14 @@
     };
   };
 
-  outputs = { nixpkgs, catppuccin, home-manager, ... }: {
+  outputs = { self, nixpkgs, catppuccin, home-manager, ... }@inputs: {
     nixosConfigurations.nixosBTW = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
       system = "x86_64-linux";
 
       modules = [
+
+        ./configuration.nix
         home-manager.nixosModules.home-manager
 
         {
