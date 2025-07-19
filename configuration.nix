@@ -108,7 +108,7 @@
 
     packages = with pkgs; [ ];
   };
-  home-manager = { users = { "ali" = import ./home.nix; }; };
+  # home-manager = { users = { "ali" = import ./home.nix; }; };
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -145,6 +145,7 @@
     alsa-utils
     flameshot
     nautilus
+    cargo
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
