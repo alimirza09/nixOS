@@ -3,6 +3,7 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
+  imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
   home.username = "ali";
   home.homeDirectory = "/home/ali";
 
@@ -34,9 +35,6 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    catppuccin-gtk
-    papirus-icon-theme
-    bibata-cursors
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -76,25 +74,12 @@
   };
   gtk = {
     enable = true;
-
-    theme = {
-      name =
-        "Catppuccin-Mocha-Standard-Mauve-Dark"; # or Adwaita-dark or any installed theme
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "mauve" ];
-        size = "standard";
-        variant = "mocha";
-      };
-    };
-
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-
-    cursorTheme = {
-      name = "Bibata-Modern-Ice";
-      package = pkgs.bibata-cursors;
+    catppuccin = {
+      enable = true;
+      flavor = "mocha";
+      accent = "pink";
+      size = "standard";
+      tweaks = [ "normal" ];
     };
   };
 
