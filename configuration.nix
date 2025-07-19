@@ -145,8 +145,6 @@
     alsa-utils
     flameshot
     nautilus
-    catppuccin-qt5ct
-
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
