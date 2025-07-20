@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -35,7 +35,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.catppuccin-qt5ct
-    inputs.quickshell.packages.${pkgs.system}.default
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
