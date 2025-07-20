@@ -21,7 +21,7 @@
       nixosConfigurations.nixosBTW = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        specialArgs = { inherit inputs quickshell catppuccin; };
+        specialArgs = { inherit inputs; };
 
         modules = [
           ./configuration.nix
@@ -31,6 +31,7 @@
             home-manager.users.ali = {
               imports = [ ./home.nix catppuccin.homeModules.catppuccin ];
             };
+            home-manager.extraSpecialArgs = { inherit inputs; };
           }
         ];
       };

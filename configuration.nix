@@ -145,7 +145,11 @@
     alsa-utils
     flameshot
     nautilus
-    cargo
+    wmctrl
+    eww
+    gcc
+    cmake
+    font-awesome_5
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
