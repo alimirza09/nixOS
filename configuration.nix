@@ -139,7 +139,6 @@
     picom
     yazi
     eza
-    fish
     github-cli
     tealdeer
     xterm
@@ -163,6 +162,7 @@
     (catppuccin-sddm.override { flavor = "mocha"; })
     lowfi
     catppuccin-grub
+    copyq
   ];
   nixpkgs.config = {
     packageOverrides = pkgs: rec {
@@ -184,13 +184,35 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+{
+  networking.firewall = {
+    enable = true;
+
+    allowedTCPPorts = [ 22 80 443 ];  # Allow SSH, HTTP, HTTPS
+
+    extraCommands = ''
+      iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
+      iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --update --seconds 60 --hitcount 6 -j DROP
+    '';
+
+    allowPing = true;  
+    # Default policy
+    rejectPackets = false;
+    allowPing = true;
+  };
+
+  # Explicit default deny incoming, allow outgoing:
+  networking.firewall.checkReversePath = "loose";
+  networking.firewall.logRefusedConnections = true;
+}
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
