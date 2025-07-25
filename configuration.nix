@@ -55,17 +55,14 @@
       enable = true;
       windowManager.i3 = {
         enable = true;
-        extraPackages = with pkgs; [
-          rofi
-          i3status
-          i3blocks
-          i3wsr
-          i3lock
-          nitrogen
-        ];
+        extraPackages = with pkgs; [ rofi nitrogen ];
       };
     };
-    displayManager = { sddm.enable = true; };
+    displayManager.sddm = {
+      enable = true;
+      theme = "catppuccin-mocha";
+      package = pkgs.kdePackages.sddm;
+    };
     libinput = {
       enable = true;
       touchpad.tapping = true;
@@ -119,8 +116,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
     neovim
     killall
     unzip
@@ -128,13 +123,11 @@
     picom
     yazi
     eza
-    nerd-fonts.jetbrains-mono
     fish
     github-cli
     tealdeer
     xterm
     git
-    pavucontrol
     kitty
     starship
     rmtrash
@@ -144,14 +137,27 @@
     bat
     alsa-utils
     flameshot
-    nautilus
-    wmctrl
-    eww
     gcc
     cmake
-    font-awesome_5
+    polybar
+    entr
+    pamixer
+    tree
+    vlc
+    xfce.ristretto
+    raylib
+    gimp
+    (catppuccin-sddm.override { flavor = "mocha"; })
   ];
-
+  nixpkgs.config = {
+    packageOverrides = pkgs: rec {
+      polybar = pkgs.polybar.override { i3Support = true; };
+    };
+  };
+  security.sudo.extraConfig = ''
+    Defaults pwfeedback
+  '';
+  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono font-awesome_5 ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
