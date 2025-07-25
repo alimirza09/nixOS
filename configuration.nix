@@ -9,8 +9,17 @@
     [ ./hardware-configuration.nix inputs.home-manager.nixosModules.default ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      useOSProber = true;
+      copyKernels = true;
+      efiSupport = true;
+      device = "nodev";
+      theme = pkgs.catppuccin-grub;
+    };
+  };
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -21,6 +30,7 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  programs.direnv.enable = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -151,6 +161,8 @@
     xfce.ristretto
     gimp
     (catppuccin-sddm.override { flavor = "mocha"; })
+    lowfi
+    catppuccin-grub
   ];
   nixpkgs.config = {
     packageOverrides = pkgs: rec {
