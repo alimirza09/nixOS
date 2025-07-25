@@ -143,15 +143,12 @@
     bat
     alsa-utils
     flameshot
-    gcc
-    cmake
     polybar
     entr
     pamixer
     tree
     vlc
     xfce.ristretto
-    raylib
     gimp
     (catppuccin-sddm.override { flavor = "mocha"; })
   ];
