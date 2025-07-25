@@ -27,6 +27,12 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs;
+    [
+
+    ];
+
   # Set your time zone.
   time.timeZone = "Asia/Karachi";
   programs.fish.enable = true;
