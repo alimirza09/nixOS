@@ -35,6 +35,7 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.catppuccin-qt5ct
+    pkgs.catppuccin-gtk
     pkgs.clang-tools
   ];
 
@@ -73,16 +74,10 @@
     # EDITOR = "emacs";
     EDITOR = "nvim";
   };
-  gtk = {
-    enable = true;
-    catppuccin = {
-      enable = true;
-      flavor = "mocha";
-      accent = "pink";
-      size = "standard";
-      tweaks = [ "normal" ];
-    };
-  };
+
+  gtk.enable = true;
+  gtk.theme.name = "catppuccin";
+  gtk.theme.package = pkgs.catppuccin-gtk;
   qt = {
     enable = true;
     style.package = pkgs.catppuccin-qt5ct;
