@@ -74,10 +74,16 @@
     # EDITOR = "emacs";
     EDITOR = "nvim";
   };
-
-  gtk.enable = true;
-  gtk.theme.name = "catppuccin";
-  gtk.theme.package = pkgs.catppuccin-gtk;
+  gtk = {
+    enable = true;
+    catppuccin = {
+      enable = true;
+      flavor = "mocha";
+      accent = "pink";
+      size = "standard";
+      tweaks = [ "normal" ];
+    };
+  };
   qt = {
     enable = true;
     style.package = pkgs.catppuccin-qt5ct;
