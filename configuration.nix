@@ -131,6 +131,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     killall
+    brightnessctl
     unzip
     btop
     picom
@@ -161,6 +162,7 @@
     catppuccin-grub
     copyq
     aseprite
+    simplescreenrecorder
   ];
   nixpkgs.config = {
     packageOverrides = pkgs: rec {

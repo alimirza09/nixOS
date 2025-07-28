@@ -36,6 +36,7 @@
     # '')
     pkgs.catppuccin-qt5ct
     pkgs.catppuccin-gtk
+    pkgs.rust-analyzer
     pkgs.clang-tools
   ];
 
