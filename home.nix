@@ -34,9 +34,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.catppuccin-qt5ct
     pkgs.catppuccin-gtk
-    pkgs.rust-analyzer
     pkgs.clang-tools
   ];
 
@@ -84,10 +82,6 @@
       size = "standard";
       tweaks = [ "normal" ];
     };
-  };
-  qt = {
-    enable = true;
-    style.package = pkgs.catppuccin-qt5ct;
   };
 
   # Let Home Manager install and manage itself.

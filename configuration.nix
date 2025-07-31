@@ -118,7 +118,7 @@
 
     packages = with pkgs; [ ];
   };
-  # home-manager = { users = { "ali" = import ./home.nix; }; };
+  home-manager = { users = { "ali" = import ./home.nix; }; };
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -161,8 +161,9 @@
     lowfi
     catppuccin-grub
     copyq
-    aseprite
     simplescreenrecorder
+    tor
+    gitui
   ];
   nixpkgs.config = {
     packageOverrides = pkgs: rec {
