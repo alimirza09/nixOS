@@ -164,6 +164,7 @@
     simplescreenrecorder
     tor
     gitui
+    alacritty
   ];
   nixpkgs.config = {
     packageOverrides = pkgs: rec {
