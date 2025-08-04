@@ -25,6 +25,16 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   services.gnome.gnome-keyring.enable = true;
 
+  virtualisation.vmVariant.virtualisation = {
+    memorySize = 4096;
+    diskSize = 40000;
+    cores = 3;
+  };
+  users.users.nixosvmtest.isSystemUser = true;
+  users.users.nixosvmtest.initialPassword = "test";
+  users.users.nixosvmtest.group = "nixosvmtest";
+  users.groups.nixosvmtest = { };
+
   networking.hostName = "nixosBTW"; # Define your hostname.
   # networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
   # Configure network proxy if necessary
@@ -70,12 +80,14 @@
         enable = true;
         extraPackages = with pkgs; [ rofi nitrogen ];
       };
+
     };
     displayManager.sddm = {
       enable = true;
       theme = "catppuccin-mocha";
       package = pkgs.kdePackages.sddm;
     };
+
     libinput = {
       enable = true;
       touchpad.tapping = true;
@@ -112,14 +124,12 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ali = {
     isNormalUser = true;
+    initialPassword = "test";
     description = "ali";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     shell = pkgs.fish;
 
-    packages = with pkgs; [ ];
   };
-  home-manager = { users = { "ali" = import ./home.nix; }; };
-
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -164,7 +174,10 @@
     simplescreenrecorder
     tor
     gitui
+    bridge-utils
     alacritty
+    i3status
+    net-tools
   ];
   nixpkgs.config = {
     packageOverrides = pkgs: rec {

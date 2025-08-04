@@ -34,8 +34,9 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    pkgs.catppuccin-gtk
     pkgs.clang-tools
+    (pkgs.colloid-gtk-theme.override { tweaks = [ "catppuccin" ]; })
+
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -69,19 +70,16 @@
   #
   #  /etc/profiles/per-user/ali/etc/profile.d/hm-session-vars.sh
   #
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Colloid-Dark-Catppuccin";
+      package = pkgs.colloid-gtk-theme;
+    };
+  };
   home.sessionVariables = {
     # EDITOR = "emacs";
     EDITOR = "nvim";
-  };
-  gtk = {
-    enable = true;
-    catppuccin = {
-      enable = true;
-      flavor = "mocha";
-      accent = "pink";
-      size = "standard";
-      tweaks = [ "normal" ];
-    };
   };
 
   # Let Home Manager install and manage itself.
