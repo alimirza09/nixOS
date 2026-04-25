@@ -25,21 +25,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   services.gnome.gnome-keyring.enable = true;
 
-  virtualisation.vmVariant.virtualisation = {
-    memorySize = 4096;
-    diskSize = 40000;
-    cores = 3;
-  };
-  users.users.nixosvmtest.isSystemUser = true;
-  users.users.nixosvmtest.initialPassword = "test";
-  users.users.nixosvmtest.group = "nixosvmtest";
-  users.groups.nixosvmtest = { };
-
   networking.hostName = "nixosBTW"; # Define your hostname.
-  # networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   programs.direnv.enable = true;
 
   # Enable networking
@@ -71,23 +57,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
   services = {
-    xserver = {
-      enable = true;
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [ rofi nitrogen ];
-      };
-
-    };
-    displayManager.sddm = {
-      enable = true;
-      theme = "catppuccin-mocha";
-      package = pkgs.kdePackages.sddm;
-    };
-
     libinput = {
       enable = true;
       touchpad.tapping = true;
@@ -96,60 +66,51 @@
     };
   };
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
   services.pipewire = {
+    audio.enable = true;
     enable = true;
+    jack.enable = true;
     alsa.enable = true;
+    wireplumber.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ali = {
     isNormalUser = true;
     initialPassword = "test";
     description = "ali";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
 
   };
-  # Install firefox.
-  programs.firefox.enable = true;
 
-  # Allow unfree packages
+  programs.firefox.enable = true;
+  programs.waybar.enable = true;
+
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
     killall
     brightnessctl
+    libinput
     unzip
+    copyq
     btop
     picom
     yazi
+    rofi
     eza
     github-cli
     tealdeer
-    xterm
     git
     kitty
     starship
@@ -158,59 +119,36 @@
     home-manager
     trash-cli
     bat
+    mako
     alsa-utils
-    flameshot
-    polybar
     entr
     pamixer
     tree
     vlc
-    xfce.ristretto
+    sway-contrib.grimshot
+    swaybg
+    ristretto
     gimp
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     (catppuccin-sddm.override { flavor = "mocha"; })
-    lowfi
     catppuccin-grub
-    copyq
     simplescreenrecorder
-    tor
-    gitui
-    bridge-utils
-    alacritty
-    i3status
-    net-tools
+    waypaper
+    swayfx
+    ripgrep
   ];
-  nixpkgs.config = {
-    packageOverrides = pkgs: rec {
-      polybar = pkgs.polybar.override { i3Support = true; };
-    };
-  };
   security.sudo.extraConfig = ''
     Defaults pwfeedback
   '';
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono font-awesome_5 ];
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   networking.firewall = {
     enable = true;
 
-    allowedTCPPorts = [ 22 80 443 ]; # Allow SSH, HTTP, HTTPS
+    allowedTCPPorts = [ 22 80 443 ]; 
 
     extraCommands = ''
       iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set
@@ -222,7 +160,6 @@
     allowPing = true;
   };
 
-  # Explicit default deny incoming, allow outgoing:
   networking.firewall.checkReversePath = "loose";
   networking.firewall.logRefusedConnections = true;
 
